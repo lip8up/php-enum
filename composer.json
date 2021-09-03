@@ -1,0 +1,32 @@
+{
+    "name": "lip/php-enum",
+    "description": "PHP 枚举基类，使用类 const 作为枚举值，每一项均含有 key、value 与 label。",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "enum", "enumeration", "enumerator",
+        "enumset", "enum-set", "set",
+        "enummap", "enum-map", "map",
+        "type", "typehint", "type-hint",
+        "枚举"
+    ],
+    "homepage": "https://github.com/lip8up/php-enum",
+    "autoload": {
+        "psr-4": {
+            "lip\\enum\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "lip8up",
+            "email": "lip8up@qq.com",
+            "homepage": "https://github.com/lip8up"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}
