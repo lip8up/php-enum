@@ -344,10 +344,29 @@ abstract class Enum implements \JsonSerializable
      * 当被 json_encode 时的实际对象。
      *
      * @return mixed
+     *
+     * <code>
+     * ```php
+     * // 对于下面的 Some
+     * class Some extends Enum
+     * {
+     *     const one = [1, '一'];
+     *     const two = [2, '二'];
+     *     const three = [3, '三'];
+     * }
+     * // 调用 json_encode(Some::one())，返回的字符串为：
+     * {"key":"one","value":1,"label":"\u4e00"}
+     * ```
+     * </code>
+     *
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      */
     public function jsonSerialize()
     {
-        return [$this->value, $this->label];
+        return [
+            'key' => $this->key,
+            'value' => $this->value,
+            'label' => $this->label
+        ];
     }
 }

@@ -170,7 +170,7 @@ Some::one() === Some::one()  // false
 `lip\enum\Enum` 类实现了接口 `JsonSerializable`，例如：
 
 ```php
-json_encode(Some::one()); // '[1,"\\u4e00"]'，即：json_encode([value, label])
+json_encode(Some::one()); // '{"key":"one","value":1,"label":"\u4e00"}'
 ```
 
 ## 单元测试

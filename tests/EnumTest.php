@@ -191,7 +191,7 @@ final class EnumTest extends TestCase
 
     public function testJsonEncode()
     {
-        $this->assertSame(json_encode(Some::one()), json_encode([1, '一']));
-        $this->assertSame(json_encode(Other::haha()), json_encode(['hh', 'hh']));
+        $this->assertSame(json_encode(Some::one()), '{"key":"one","value":1,"label":"\u4e00"}');
+        $this->assertSame(json_encode(Other::haha()), '{"key":"haha","value":"hh","label":"hh"}');
     }
 }
