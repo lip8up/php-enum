@@ -68,7 +68,7 @@ final class Some extends Enum
 
 ```php
 function useSome(Some $some) {
-  // ...
+    // ...
 }
 ```
 
