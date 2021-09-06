@@ -103,7 +103,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 获取全部常量列表。
+     * 获取全部常量列表，格式：`[ key1 => [value1, label1], ... ]`。
      *
      * @return array
      *
@@ -146,21 +146,6 @@ abstract class Enum implements \JsonSerializable
      * 获取全部 key 列表。
      *
      * @return array
-     *
-     * @example #
-     * <code>
-     * ```php
-     * // 对于下面的 Some
-     * class Some extends Enum
-     * {
-     *     private const One = [1, '一'];
-     *     private const Two = [2, '二'];
-     *     private const Three = [3, '三'];
-     * }
-     * // 调用 Some::allKeys()，结果为：
-     * ['One', 'Two', 'Three']
-     * ```
-     * </code>
      */
     public static function allKeys(): array
     {
@@ -173,21 +158,6 @@ abstract class Enum implements \JsonSerializable
      * 获取全部 value 列表。
      *
      * @return array
-     *
-     * @example #
-     * <code>
-     * ```php
-     * // 对于下面的 Some
-     * class Some extends Enum
-     * {
-     *     private const One = [1, '一'];
-     *     private const Two = [2, '二'];
-     *     private const Three = [3, '三'];
-     * }
-     * // 调用 Some::allValues()，结果为：
-     * [1, 2, 3]
-     * ```
-     * </code>
      */
     public static function allValues(): array
     {
@@ -198,21 +168,6 @@ abstract class Enum implements \JsonSerializable
      * 获取全部 label 列表。
      *
      * @return array
-     *
-     * @example #
-     * <code>
-     * ```php
-     * // 对于下面的 Some
-     * class Some extends Enum
-     * {
-     *     private const One = [1, '一'];
-     *     private const Two = [2, '二'];
-     *     private const Three = [3, '三'];
-     * }
-     * // 调用 Some::allLabels()，结果为：
-     * ['一', '二', '三']
-     * ```
-     * </code>
      */
     public static function allLabels(): array
     {
@@ -220,27 +175,11 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 获取 $value 对应的 label。
-     * 若找不到，返回 null；若不指定 $value 或传递为 null，则返回整个 valueToLabelMap。
+     * 获取 $value 对应的 label 或 null，若不传参数或传 null，返回整个 map，例如：[1 => '一', 2 => '二', 3 => '三']。
      *
      * @param mixed $value 要转换的 value
      *
      * @return string|null|array
-     *
-     * @example #
-     * <code>
-     * ```php
-     * // 对于下面的 Some
-     * class Some extends Enum
-     * {
-     *     private const One = [1, '一'];
-     *     private const Two = [2, '二'];
-     *     private const Three = [3, '三'];
-     * }
-     * // 不使用参数调用 Some::valueToLabel()，返回的 valueToLabelMap 为：
-     * [1 => '一', 2 => '二', 3 => '三']
-     * ```
-     * </code>
      */
     public static function valueToLabel($value = null)
     {
@@ -249,27 +188,11 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 获取 $label 对应的 value。若枚举中 label 有重复，则使用最后的 label。
-     * 若找不到，返回 null；若不指定 $value 或传递为 null，返回整个 labelToValueMap。
+     * 获取 $label 对应的 value 或 null，若不传参数或传 null，返回整个 map，例如：['一' => 1, '二' => 2, '三' => 3]
      *
      * @param string $label 要转换的 label
      *
      * @return mixed|null|array
-     *
-     * @example #
-     * <code>
-     * ```php
-     * // 对于下面的 Some
-     * class Some extends Enum
-     * {
-     *     private const One = [1, '一'];
-     *     private const Two = [2, '二'];
-     *     private const Three = [3, '三'];
-     * }
-     * // 不使用参数调用 Some::labelToValue()，返回的 labelToValueMap 为：
-     * ['一' => 1, '二' => 2, '三' => 3]
-     * ```
-     * </code>
      */
     public static function labelToValue(string $label = null)
     {

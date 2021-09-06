@@ -139,10 +139,10 @@ Other::Haha()->value() == Other::Haha()->label()   // true
 
 方法名 | 说明
 --- | ---
-`key()` | 获取枚举 key。
-`value()` | 获取枚举 value。
-`label()` | 获取枚举 label。
-`__toString()` | 无法被主动调用，在对实例本身进行字符串连接时，会被调用，此处实现为：`(string)$this->value`
+key() | 获取枚举 key。
+value() | 获取枚举 value。
+label() | 获取枚举 label。
+__toString() | 无法被主动调用，在对实例本身进行字符串连接时，会被调用，此处实现为：`(string)$this->value`
 
 ### 静态方法
 
@@ -150,15 +150,15 @@ Other::Haha()->value() == Other::Haha()->label()   // true
 
 方法名 | 说明
 --- | ---
-`allConstants()` | 获取全部常量列表。调用 `Some::allConstants()`，结果为：`[ 'One' => [1, '一'], 'Two' => [2, '二'], 'Three' => [3, '三'] ]`。
-`allKeys()` | 获取全部 `key` 列表。调用 `Some::allKeys()`，结果为：`['One', 'Two', 'Three']`。
-`allValues()` | 获取全部 `value` 列表。调用 `Some::allValues()`，结果为：`[1, 2, 3]`。
-`allLabels()` | 获取全部 `label` 列表。调用 `Some::allLabels()`，结果为：`['一', '二', '三']`。
-`valueToLabel(mixed $value = null)` | 获取 `$value` 对应的 `label`。若找不到，返回 `null`；若不指定 `$value` 或传递为 `null`，则返回整个 `valueToLabelMap`。不使用参数调用 `Some::valueToLabel()`，返回的 `valueToLabelMap` 为：`[1 => '一', 2 => '二', 3 => '三']`。
-`labelToValue(string $label = null)` | 获取 `$label` 对应的 `value`。若枚举中 `label` 有重复，则使用最后的 `label`。若找不到，返回 `null`；若不指定 `$value` 或传递为 `null`，返回整个 `labelToValueMap`。不使用参数调用 `Some::labelToValue()`，返回的 `labelToValueMap` 为：`['一' => 1, '二' => 2, '三' => 3]`。
-`isValidKey(string $key)` | 判断是否为合法的 `key`。
-`isValidValue(mixed $value)` | 判断是否为合法的 `value`。
-`isValidLabel(string $label)` | 判断是否为合法的 `label`。
+allConstants() | 获取全部常量列表，格式：`[ key1 => [value1, label1], ... ]`，例如：`[ 'One' => [1, '一'], 'Two' => [2, '二'], 'Three' => [3, '三'] ]`。
+allKeys() | 获取全部 key 列表。
+allValues() | 获取全部 value 列表。
+allLabels() | 获取全部 label 列表。
+valueToLabel(mixed $value = null) | 获取 $value 对应的 label 或 null。若不传参数或传 null，返回整个 `map`，例如：`[1 => '一', 2 => '二', 3 => '三']`。
+labelToValue(string $label = null) | 获取 $label 对应的 value 或 null。若不传参数或传 null，返回整个 `map`。例如：`['一' => 1, '二' => 2, '三' => 3]`。
+isValidKey(string $key) | 判断是否为合法的 key。
+isValidValue(mixed $value) | 判断是否为合法的 value。
+isValidLabel(string $label) | 判断是否为合法的 label。
 
 ## 总是返回新实例
 
@@ -183,4 +183,4 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 
 ## 结语
 
-有任何建议或改进，请发 [`issue`](https://github.com/lip8up/php-enum/issues/new)。
+有任何建议或改进，请发 [issue](https://github.com/lip8up/php-enum/issues/new)。
