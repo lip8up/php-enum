@@ -127,7 +127,7 @@ Other::Haha()->value() == Other::Haha()->label()   // true
 
 ### 语法提示
 
-由于 `lip\enum\Enum` 类使用了魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic)，导致在调用诸如 `Some::One()` 时，其结果不能正确地，被开发工具反射正确的类型，为使开发工具能正确地识别类型，可在枚举类的注释中，为每一个类常量增加一行 `@method static self ConstName() 函数说明`，具体参见上面的例子。
+由于 `lip\enum\Enum` 类使用了魔术方法，导致在调用诸如 `Some::One()` 时，其结果不能正确地，被开发工具反射正确的类型，为使开发工具能正确地识别类型，可在枚举类的注释中，为每一个类常量增加一行 `@method static self ConstName() 函数说明`，具体参见上面的例子。
 
 ### 无法被实例化
 
