@@ -184,3 +184,7 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 ## 结语
 
 有任何建议或改进，请发 [issue](https://github.com/lip8up/php-enum/issues/new)。
+
+## 备注
+
+如何发布到 https://packagist.org/，打一个 release Tag，转到 https://packagist.org/packages/lip/php-enum，就可以看到新版本了。
