@@ -1,6 +1,6 @@
 # php-enum
 
-PHP 枚举基类，使用类常量（`const`）作为枚举值，每一项均含有 `key`、`value` 与 `label`。
+PHP 枚举基类，使用`类常量`作为枚举值，每一项均含有 `key`、`value` 与 `label`。
 
 ## 安装
 
@@ -36,74 +36,15 @@ enum Direction {
 
 本库将这种文字描述，定义为枚举的 `label`，即上面的`上`、`下`、`左`、`右`。
 
-由于 `PHP` 本身不支持枚举，创建本库，目前只含有一个类 `lip\enum\Enum`，继承该类，定义类常量（`const`），作为枚举值。
+由于 `PHP` 本身不支持枚举，创建本库，目前只含有一个类 `lip\enum\Enum`，继承该类，定义类常量，作为枚举值。
 
 ## 使用
 
 ### 标准用法（推荐）
 
-每一项 `const` 均为一个`数组`，`数组`中，第一项为 `value`，第二项为 `label`，顺序不能变。
+每一项类常量均为一个`数组`，其中，第一项为 `value`，第二项为 `label`，顺序不能变。
 
-所以下列例子中，`One`、`Two`、`Three` 为 `key`，`1`、`2`、`3` 为 `value`，`一`、`二`、`三`为 `label`。
-
-```php
-<?php
-use lip\enum\Enum;
-
-/**
- * 一个很有意思的枚举。
- * @method static self One()    One的函数说明
- * @method static self Two()    Two的函数说明
- * @method static self Three()  Three的函数说明
- */
-final class Some extends Enum
-{
-    // 实际使用时，强烈推荐将 const 声明为 private，
-    // 这里为配合下面的说明，不能声明为 private
-    const One = [1, '一'];
-    private const Two = [2, '二'];
-    private const Three = [3, '三'];
-}
-```
-
-定义一个使用 `Some` 枚举作为参数的函数，使用`强类型`进行标注：
-
-```php
-function useSome(Some $some) { }
-```
-
-此时，如果用别的值，传递给上述函数 `useSome`，则会报错，比如传递 `Some::One`，由于它的值为 `[1, '一']`，类型为 `array`，而非 `Some`，故而会报错。
-
-`Some` 类继承自 `lip\enum\Enum` 类，该类赋予 `Some` 一个很重要的能力：将 `const` 定义转成静态方法，调用此方法，会获得对应的 `Some` 类实例。
-
-例如 `Some::One()` 对应的就是含有常量 `Some::One` 值的 `Some` 类实例，可以无障碍地传给 `useSome`：
-
-```php
-useSome(Some::One());
-```
-
-注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个类常量 `const`，就有多少个相对应的同名静态方法。
-
-那么 `useSome` 里如何获取`枚举`相应的 `key`、`value`、`label` 呢？调用相应的`实例方法`即可，例如：
-
-```php
-function useSome(Some $some)
-{
-    $key = $some->key();
-    $value = $some->value();
-    $label => $some->label();
-    // $some 可以直接参与字符串连接运算，相当于 $some->value() 参与了运算，例如：
-    echo 'some value is: ' . $some;
-    // 相当于
-    echo 'some value is: ' . $some->value();
-}
-```
-
-更多 `lip\enum\Enum` 类实例 & 静态方法参见下面的[`方法列表`](#方法列表)部分。
-
-### 隐藏常量
-
-为避免枚举类的用户，直接使用其内部的 `const` 成员，强烈推荐将其声明为 `private`，即：
+下例中，`One`、`Two`、`Three` 为 `key`，`1`、`2`、`3` 为 `value`，`一`、`二`、`三`为 `label`。
 
 ```php
 <?php
@@ -123,11 +64,50 @@ final class Some extends Enum
 }
 ```
 
-### 简洁用法
+定义一个使用 `Some` 枚举作为参数的函数，使用`强类型`进行标注：
 
-此用法不关心 `label`，每一项 `const` 为一个单一的值，此时 `value`、`label` 相同，均为该常量值。
+```php
+function useSome(Some $some) {
+  // ...
+}
+```
 
-所以下面的例子中，`Haha`、`Bibi` 为 `key`，`hh`、`bb` 既是 `value` 也是 `label`。
+此时，如果用别的值，传递给上述函数 `useSome`，则会报错，比如传递 `Some::One`，由于它的值为 `[1, '一']`，类型为 `array`，而非 `Some`，故而会报错。
+
+`Some` 类继承自 `lip\enum\Enum` 类，该类赋予 `Some` 一个很重要的能力：
+
+> 将类常量定义转成对应的静态方法，调用此方法，会获得对应的 `Some` 类实例。
+
+例如 `Some::One()` 对应的就是含有常量 `Some::One` 值的 `Some` 类实例，可以无障碍地传给 `useSome`：
+
+```php
+useSome(Some::One());
+```
+
+注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个`类常量`，就有多少个对应名字的静态方法。
+
+那么 `useSome` 里如何获取`枚举`相应的 `key`、`value`、`label` 呢？调用相应的`实例方法`即可，例如：
+
+```php
+function useSome(Some $some)
+{
+    $key = $some->key();
+    $value = $some->value();
+    $label => $some->label();
+    // $some 可以直接参与字符串连接运算，相当于 $some->value() 参与了运算，例如：
+    echo 'some value is: ' . $some;
+    // 相当于
+    echo 'some value is: ' . $some->value();
+}
+```
+
+更多 `lip\enum\Enum` 类实例 & 静态方法参见下面的[`方法列表`](#方法列表)部分。
+
+> 强烈建议将类常量定义为 `private`，以免被访问到，始终使用 `Some::ConstName()` 的形式获取相应的枚举实例。
+
+### 简洁用法（不需要或者不关注 label 时使用）
+
+此用法不关注 `label`，每个类常量均为单一值，此时 `value`、`label` 相同，均为该常量值，举例来说：
 
 ```php
 /**
@@ -141,17 +121,17 @@ final class Other extends Enum
     private const Bibi = 'bb';
 }
 
-Other::Haha()   // key: Haha, value: 'hh', label: 'hh'
-Other::Bibi()   // key: Bibi, value: 'bb', label: 'bb'
+// Other 实例的 value 与 label 是相同的，都是 hh
+Other::Haha()->value() == Other::Haha()->label()   // true
 ```
 
 ### 语法提示
 
-由于 `lip\enum\Enum` 类使用了魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic)，导致在调用诸如 `Some::One()` 时，其结果不能正确地，被开发工具反射正确的类型，为使开发工具能正确地识别类型，可在枚举类的注释中，为每一项 `const` 增加一行 `@method static self const_name()`，具体参见上面的例子。
+由于 `lip\enum\Enum` 类使用了魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic)，导致在调用诸如 `Some::One()` 时，其结果不能正确地，被开发工具反射正确的类型，为使开发工具能正确地识别类型，可在枚举类的注释中，为每一个类常量增加一行 `@method static self ConstName() 函数说明`，具体参见上面的例子。
 
 ### 无法被实例化
 
-基类 `lip\enum\Enum` 将构造函数设为 `protected`，因此，除非在子类中显式指定为 `public`，否则枚举类无法被显式实例化，例如上面的 `new Some(...)` 会报错，必须使用与`类常量`同名的静态方法 `Some::One()` 等进行，这是为了保持风格统一，也避免使用者关注实现细节。
+基类 `lip\enum\Enum` 将构造函数设为 `protected`，禁止通过构造函数实例化枚举类，建议始终使用 `Some::ConstName()` 的形式。
 
 ## 方法列表
 
@@ -166,7 +146,7 @@ Other::Bibi()   // key: Bibi, value: 'bb', label: 'bb'
 
 ### 静态方法
 
-子类定义的类常量（`const`）名，不要与下面👇的静态方法同名。
+子类定义的类常量名，不要与下面👇的静态方法同名。
 
 方法名 | 说明
 --- | ---
@@ -182,7 +162,7 @@ Other::Bibi()   // key: Bibi, value: 'bb', label: 'bb'
 
 ## 总是返回新实例
 
-相同的 `const` 值，每次调用静态方法，均返回一个新的类实例，即：
+相同的类常量值，每次调用静态方法，均返回一个新的类实例，即：
 
 ```php
 Some::One() !== Some::One()  // true
@@ -199,7 +179,7 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 
 ## 单元测试
 
-运行 `./runtest.sh` 执行单元测试，本库已被 `100%` 测试通过，请放心使用。
+运行 `./runtest.sh` 执行单元测试，已 `100%` 测试通过，请放心使用。
 
 ## 结语
 
