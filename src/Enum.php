@@ -93,7 +93,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 枚举值的字符串形式。
+     * 枚举 value 的字符串形式。
      *
      * @return string
      */
@@ -107,20 +107,21 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 调用 Some::allConstants()，结果为：
      * [
-     *     'one' => [1, '一'],
-     *     'two' => [2, '二'],
-     *     'three' => [3, '三'],
+     *     'One' => [1, '一'],
+     *     'Two' => [2, '二'],
+     *     'Three' => [3, '三'],
      * ]
      * ```
      * </code>
@@ -146,17 +147,18 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 调用 Some::allKeys()，结果为：
-     * ['one', 'two', 'three']
+     * ['One', 'Two', 'Three']
      * ```
      * </code>
      */
@@ -172,14 +174,15 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 调用 Some::allValues()，结果为：
      * [1, 2, 3]
@@ -196,14 +199,15 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 调用 Some::allLabels()，结果为：
      * ['一', '二', '三']
@@ -223,14 +227,15 @@ abstract class Enum implements \JsonSerializable
      *
      * @return string|null|array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 不使用参数调用 Some::valueToLabel()，返回的 valueToLabelMap 为：
      * [1 => '一', 2 => '二', 3 => '三']
@@ -251,14 +256,15 @@ abstract class Enum implements \JsonSerializable
      *
      * @return mixed|null|array
      *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
      * // 不使用参数调用 Some::labelToValue()，返回的 labelToValueMap 为：
      * ['一' => 1, '二' => 2, '三' => 3]
@@ -272,8 +278,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * allValues、allLabels、valueToLabelMap、labelToValueMap 等方法的公用方法，
-     * 用于 allConstants 的 array_column 操作。
+     * allValues、allLabels、valueToLabel、labelToValue 等方法的公用方法。
      *
      * @param string|int|null $columnKey
      * @param string|int|null $indexKey
@@ -345,21 +350,22 @@ abstract class Enum implements \JsonSerializable
      *
      * @return mixed
      *
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     *
+     * @example #
      * <code>
      * ```php
      * // 对于下面的 Some
      * class Some extends Enum
      * {
-     *     const one = [1, '一'];
-     *     const two = [2, '二'];
-     *     const three = [3, '三'];
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
      * }
-     * // 调用 json_encode(Some::one())，返回的字符串为：
-     * {"key":"one","value":1,"label":"\u4e00"}
+     * // 调用 json_encode(Some::One())，返回的字符串为：
+     * {"key":"One","value":1,"label":"\u4e00"}
      * ```
      * </code>
-     *
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      */
     public function jsonSerialize()
     {

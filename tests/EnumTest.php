@@ -7,46 +7,46 @@ use lip\enum\Enum;
 
 /**
  * 一个很有意思的枚举。
- * @method static self one()
- * @method static self two()
- * @method static self three()
+ * @method static self One() 这是一个描述
+ * @method static self Two() 这是另一个描述
+ * @method static self Three() 这是第三个描述
  */
 final class Some extends Enum
 {
-    const one = [1, '一'];
-    const two = [2, '二'];
-    const three = [3, '三'];
+    private const One = [1, '一'];
+    private const Two = [2, '二'];
+    private const Three = [3, '三'];
 }
 
 /**
  * 另一个很有意思的枚举。
- * @method static self haha()
- * @method static self bibi()
+ * @method static self Haha() 哈哈大笑
+ * @method static self Bibi() You can you up, no can no bibi
  */
 final class Other extends Enum
 {
-    const haha = 'hh';
-    const bibi = 'bb';
+    private const Haha = 'hh';
+    private const Bibi = 'bb';
 }
 
 final class EnumTest extends TestCase
 {
     public function testInstanceOf()
     {
-        $this->assertInstanceOf(Some::class, Some::one());
-        $this->assertInstanceOf(Other::class, Other::haha());
+        $this->assertInstanceOf(Some::class, Some::One());
+        $this->assertInstanceOf(Other::class, Other::Haha());
     }
 
     public function testConstructorProtectedSome()
     {
         $this->expectError();
-        new Some('three', 3);
+        new Some('Three', 3);
     }
 
     public function testConstructorProtectedOther()
     {
         $this->expectError();
-        new Other('bibi', 'bb');
+        new Other('Bibi', 'bb');
     }
 
     public function testBadStaticCallSome()
@@ -63,63 +63,63 @@ final class EnumTest extends TestCase
 
     public function testClone()
     {
-        $this->assertNotSame(Some::one(), Some::one());
-        $this->assertNotSame(Other::haha(), Other::haha());
+        $this->assertNotSame(Some::One(), Some::One());
+        $this->assertNotSame(Other::Haha(), Other::Haha());
     }
 
     public function testKey()
     {
-        $this->assertSame('one', Some::one()->key());
-        $this->assertSame('two', Some::two()->key());
-        $this->assertSame('three', Some::three()->key());
-        $this->assertSame('haha', Other::haha()->key());
-        $this->assertSame('bibi', Other::bibi()->key());
+        $this->assertSame('One', Some::One()->key());
+        $this->assertSame('Two', Some::Two()->key());
+        $this->assertSame('Three', Some::Three()->key());
+        $this->assertSame('Haha', Other::Haha()->key());
+        $this->assertSame('Bibi', Other::Bibi()->key());
     }
 
     public function testValue()
     {
-        $this->assertSame(1, Some::one()->value());
-        $this->assertSame(2, Some::two()->value());
-        $this->assertSame(3, Some::three()->value());
-        $this->assertSame('hh', Other::haha()->value());
-        $this->assertSame('bb', Other::bibi()->value());
+        $this->assertSame(1, Some::One()->value());
+        $this->assertSame(2, Some::Two()->value());
+        $this->assertSame(3, Some::Three()->value());
+        $this->assertSame('hh', Other::Haha()->value());
+        $this->assertSame('bb', Other::Bibi()->value());
     }
 
     public function testLabel()
     {
-        $this->assertSame('一', Some::one()->label());
-        $this->assertSame('二', Some::two()->label());
-        $this->assertSame('三', Some::three()->label());
-        $this->assertSame('hh', Other::haha()->label());
-        $this->assertSame('bb', Other::bibi()->label());
+        $this->assertSame('一', Some::One()->label());
+        $this->assertSame('二', Some::Two()->label());
+        $this->assertSame('三', Some::Three()->label());
+        $this->assertSame('hh', Other::Haha()->label());
+        $this->assertSame('bb', Other::Bibi()->label());
     }
 
     public function testToString()
     {
-        $this->assertSame('1--', Some::one() . '--');
-        $this->assertSame('2--', Some::two() . '--');
-        $this->assertSame('3--', Some::three() . '--');
-        $this->assertSame('hh--', Other::haha() . '--');
-        $this->assertSame('bb--', Other::bibi() . '--');
+        $this->assertSame('1--', Some::One() . '--');
+        $this->assertSame('2--', Some::Two() . '--');
+        $this->assertSame('3--', Some::Three() . '--');
+        $this->assertSame('hh--', Other::Haha() . '--');
+        $this->assertSame('bb--', Other::Bibi() . '--');
     }
 
     public function testAllConstants()
     {
         $this->assertEquals(Some::allConstants(), [
-            'one' => [1, '一'],
-            'two' => [2, '二'],
-            'three' => [3, '三'],
+            'One' => [1, '一'],
+            'Two' => [2, '二'],
+            'Three' => [3, '三'],
         ]);
         $this->assertEquals(Other::allConstants(), [
-            'haha' => ['hh', 'hh'],
-            'bibi' => ['bb', 'bb'],
+            'Haha' => ['hh', 'hh'],
+            'Bibi' => ['bb', 'bb'],
         ]);
     }
 
     public function testAllKeys()
     {
-        $this->assertEquals(Some::allKeys(), ['one', 'two', 'three']);
-        $this->assertEquals(Other::allKeys(), ['haha', 'bibi']);
+        $this->assertEquals(Some::allKeys(), ['One', 'Two', 'Three']);
+        $this->assertEquals(Other::allKeys(), ['Haha', 'Bibi']);
     }
 
     public function testAllValues()
@@ -167,10 +167,10 @@ final class EnumTest extends TestCase
 
     public function testIsValidKey()
     {
-        $this->assertSame(Some::isValidKey('one'), true);
-        $this->assertSame(Some::isValidKey('onex'), false);
-        $this->assertSame(Other::isValidKey('haha'), true);
-        $this->assertSame(Other::isValidKey('bb'), false);
+        $this->assertSame(Some::isValidKey('One'), true);
+        $this->assertSame(Some::isValidKey('Onex'), false);
+        $this->assertSame(Other::isValidKey('Haha'), true);
+        $this->assertSame(Other::isValidKey('Bb'), false);
     }
 
     public function testIsValidValue()
@@ -191,7 +191,7 @@ final class EnumTest extends TestCase
 
     public function testJsonEncode()
     {
-        $this->assertSame(json_encode(Some::one()), '{"key":"one","value":1,"label":"\u4e00"}');
-        $this->assertSame(json_encode(Other::haha()), '{"key":"haha","value":"hh","label":"hh"}');
+        $this->assertSame(json_encode(Some::One()), '{"key":"One","value":1,"label":"\u4e00"}');
+        $this->assertSame(json_encode(Other::Haha()), '{"key":"Haha","value":"hh","label":"hh"}');
     }
 }
