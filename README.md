@@ -44,7 +44,7 @@ enum Direction {
 
 每一个类常量均为一个`数组`，其中，第一项为 `value`，第二项为 `label`，顺序不能变。
 
-下例中，`One`、`Two`、`Three` 为 `key`，`1`、`2`、`3` 为 `value`，`一`、`二`、`三`为 `label`。
+下例中，One、Two、Three 为 `key`，1、2、3 是 `value`，一、二、三是 `label`。
 
 ```php
 <?php
@@ -74,9 +74,9 @@ function useSome(Some $some) {
 
 此时，如果用别的值，传递给上述函数 `useSome`，则会报错，比如传递 `Some::One`，由于它的值为 `[1, '一']`，类型为 `array`，而非 `Some`，故而会报错。
 
-`Some` 类继承自 `lip\enum\Enum` 类，该类赋予 `Some` 一个很重要的能力：
+`Some` 继承自 `lip\enum\Enum` 类，该类赋予 `Some` 一个很重要的能力：
 
-> 将类常量定义转成对应的静态方法，调用此方法，会获得对应的 `Some` 类实例。
+> 将类常量定义，转换成对应的静态方法，调用此方法，会获得对应的 `Some` 类实例。
 
 例如 `Some::One()` 对应的就是含有常量 `Some::One` 值的 `Some` 类实例，可以无障碍地传给 `useSome`：
 
@@ -84,9 +84,9 @@ function useSome(Some $some) {
 useSome(Some::One());
 ```
 
-注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个`类常量`，就有多少个对应名字的静态方法。
+注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个类常量，就有多少个对应名字的静态方法。
 
-那么 `useSome` 里如何获取`枚举`相应的 `key`、`value`、`label` 呢？调用相应的`实例方法`即可，例如：
+那么 `useSome` 里如何获取枚举相应的 `key`、`value`、`label` 呢？调用相应的`实例方法`即可，例如：
 
 ```php
 function useSome(Some $some)
@@ -131,7 +131,7 @@ Other::Haha()->value() == Other::Haha()->label()   // true
 
 ### 无法被实例化
 
-基类 `lip\enum\Enum` 将构造函数设为 `protected`，禁止通过构造函数实例化枚举类，建议始终使用 `Some::ConstName()` 的形式。
+基类 `lip\enum\Enum` 将构造函数设为 `protected`，禁止通过构造函数实例化枚举类，请始终使用 `Some::ConstName()` 的形式。
 
 ## 方法列表
 
@@ -146,7 +146,7 @@ __toString() | 无法被主动调用，在对实例本身进行字符串连接�
 
 ### 静态方法
 
-子类定义的类常量名，不要与下面👇的静态方法同名。
+子类定义的类常量名，不要与👇的静态方法同名。
 
 方法名 | 说明
 --- | ---
@@ -179,7 +179,7 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 
 ## 单元测试
 
-运行 `./runtest.sh` 执行单元测试，已 `100%` 测试通过，请放心使用。
+运行 `./runtest.sh` 执行单元测试，已 **100%** 测试通过，请放心使用。
 
 ## 结语
 
