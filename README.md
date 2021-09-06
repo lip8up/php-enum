@@ -84,7 +84,7 @@ function useSome(Some $some) {
 useSome(Some::One());
 ```
 
-注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [`__callStatic`](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个类常量，就有多少个对应名字的静态方法。
+注意 `Some::One()` 是一个静态方法，它通过类 `lip\enum\Enum` 里的魔术方法 [__callStatic](https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic) 添加，有多少个类常量，就有多少个对应名字的静态方法。
 
 那么 `useSome` 里如何获取枚举相应的 `key`、`value`、`label` 呢？调用相应的`实例方法`即可，例如：
 
