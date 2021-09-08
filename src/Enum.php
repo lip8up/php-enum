@@ -263,9 +263,9 @@ abstract class Enum implements \JsonSerializable
                 throw new \BadMethodCallException($message);
             }
             [$value, $label] = $allConstants[$name];
-            return self::$instances[$class][$name] = new static($name, $value, $label);
+            self::$instances[$class][$name] = new static($name, $value, $label);
         }
-        return clone self::$instances[$class][$name];
+        return self::$instances[$class][$name];
     }
 
     /**

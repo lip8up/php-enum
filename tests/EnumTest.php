@@ -61,10 +61,25 @@ final class EnumTest extends TestCase
         Other::badCall();
     }
 
-    public function testClone()
+    public function testSame()
     {
-        $this->assertNotSame(Some::One(), Some::One());
-        $this->assertNotSame(Other::Haha(), Other::Haha());
+        $this->assertSame(Some::One(), Some::One());
+        $this->assertSame(Other::Haha(), Other::Haha());
+        $one = Some::One();
+        switch ($one) {
+            case Some::One():
+                $this->assertTrue(true);
+                break;
+            case Some::Two():
+                $this->assertTrue(false);
+                break;
+            case Some::Three():
+                $this->assertTrue(false);
+                break;
+            default:
+                $this->assertTrue(false);
+                break;
+        }
     }
 
     public function testKey()

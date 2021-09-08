@@ -160,13 +160,42 @@ isValidKey(string $key) | 判断是否为合法的 key。
 isValidValue(mixed $value) | 判断是否为合法的 value。
 isValidLabel(string $label) | 判断是否为合法的 label。
 
-## 总是返回新实例
+## 唯一实例
 
-相同的类常量值，每次调用静态方法，均返回一个新的类实例，即：
+相同的类常量值，每次调用静态方法，均返回唯一的类实例，即：
 
 ```php
-Some::One() !== Some::One()  // true
-Some::One() === Some::One()  // false
+Some::One() === Some::One()  // true
+Some::One() !== Some::One()  // false
+```
+
+因此，判断一个枚举实例，是否为某个枚举时，可以这样：
+
+```php
+if ($some === Some::One()) {
+    // ...
+} else if ($some === Some::Two()) {
+    // ...
+} else if ($some === Some::Three()) {
+    // ...
+} else {
+    // ...
+}
+// 或者
+switch ($some) {
+    case Some::One():
+        // ...
+        break;
+    case Some::Two():
+        // ...
+        break;
+    case Some::Three():
+        // ...
+        break;
+    default:
+        // ...
+        break;
+}
 ```
 
 ## JsonSerializable
