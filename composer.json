@@ -16,6 +16,9 @@
             "lip\\enum\\": "src/"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "authors": [
         {
             "name": "lip8up",
