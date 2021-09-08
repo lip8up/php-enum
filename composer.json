@@ -17,7 +17,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit tests"
     },
     "authors": [
         {
