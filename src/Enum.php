@@ -184,7 +184,7 @@ abstract class Enum implements \JsonSerializable
     public static function valueToLabel($value = null)
     {
         $map = self::columnValues(1, 0);
-        return $value == null ? $map : ($map[$value] ?? null);
+        return $value === null ? $map : ($map[$value] ?? null);
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class Enum implements \JsonSerializable
     public static function labelToValue(string $label = null)
     {
         $map = self::columnValues(0, 1);
-        return $label == null ? $map : ($map[$label] ?? null);
+        return $label === null ? $map : ($map[$label] ?? null);
     }
 
     /**
