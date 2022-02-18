@@ -143,7 +143,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 作为列表返回，以便前端使用，类 js 格式：`[ { key: key1, value: value1, label: label1  }, ... ]`。
+     * 作为列表返回，以便前端使用，返回值用类 js 格式表示：`[ { key: key1, value: value1, label: label1  }, ... ]`。
      *
      * @return array
      *
