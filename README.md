@@ -208,7 +208,7 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 
 ## 单元测试
 
-运行 `./runtest.sh` 执行单元测试，已 **100%** 测试通过，请放心使用。
+运行 `tests/runtest.sh` 执行单元测试，已 **100%** 测试通过，请放心使用。
 
 ## 结语
 

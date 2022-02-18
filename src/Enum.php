@@ -143,6 +143,40 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * 作为列表返回，以便前端使用，类 js 格式：`[ { key: key1, value: value1, label: label1  }, ... ]`。
+     *
+     * @return array
+     *
+     * @example #
+     * <code>
+     * ```php
+     * // 对于下面的 Some
+     * class Some extends Enum
+     * {
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
+     * }
+     * // 调用 Some::asList()，结果为：
+     * [
+     *     [ 'key' => 'One', 'value' => 1, 'label' => '一' ],
+     *     [ 'key' => 'Two', 'value' => 2, 'label' => '二' ],
+     *     [ 'key' => 'Three', 'value' => 3, 'label' => '三' ],
+     * ]
+     * ```
+     * </code>
+     */
+    public static function asList()
+    {
+        $all = self::allConstants();
+        $list = [];
+        foreach ($all as $key => [$value, $label]) {
+            array_push($list, ['key' => $key, 'value' => $value, 'label' => $label]);
+        }
+        return $list;
+    }
+
+    /**
      * 获取全部 key 列表。
      *
      * @return array

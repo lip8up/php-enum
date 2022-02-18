@@ -131,6 +131,19 @@ final class EnumTest extends TestCase
         ]);
     }
 
+    public function testAsList()
+    {
+        $this->assertEquals(Some::asList(), [
+            [ 'key' => 'One', 'value' => 1, 'label' => '一' ],
+            [ 'key' => 'Two', 'value' => 2, 'label' => '二' ],
+            [ 'key' => 'Three', 'value' => 3, 'label' => '三' ],
+        ]);
+        $this->assertEquals(Other::asList(), [
+            [ 'key' => 'Haha', 'value' => 'hh', 'label' => 'hh' ],
+            [ 'key' => 'Bibi', 'value' => 'bb', 'label' => 'bb' ],
+        ]);
+    }
+
     public function testAllKeys()
     {
         $this->assertEquals(Some::allKeys(), ['One', 'Two', 'Three']);
