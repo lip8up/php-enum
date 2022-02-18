@@ -217,4 +217,4 @@ json_encode(Some::One()); // '{"key":"One","value":1,"label":"\u4e00"}'
 
 ## 如何发布
 
-打 release Tag，转到 [php-enum](https://packagist.org/packages/lip/php-enum)，就可以看到新版本了。
+打 [release Tag](https://github.com/lip8up/php-enum/releases/new)，转到 [php-enum](https://packagist.org/packages/lip/php-enum)，就可以看到新版本了。
