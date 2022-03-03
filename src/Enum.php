@@ -209,7 +209,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 获取 $value 对应的 label 或 null，若不传参数或传 null，返回整个 map，例如：[1 => '一', 2 => '二', 3 => '三']。
+     * 获取 $value 对应的 label，如不存在，返回 $default，若不传参数，返回整个 map，例如：[1 => '一', 2 => '二', 3 => '三']。
      *
      * @param mixed $value 要转换的 value
      * @param mixed $default 默认的 label
@@ -219,11 +219,11 @@ abstract class Enum implements \JsonSerializable
     public static function valueToLabel($value = null, $default = null)
     {
         $map = self::columnValues(1, 0);
-        return $value === null ? $map : ($map[$value] ?? $default);
+        return func_num_args() == 0 ? $map : ($value !== null ? ($map[$value] ?? $default) : $default);
     }
 
     /**
-     * 获取 $label 对应的 value 或 null，若不传参数或传 null，返回整个 map，例如：['一' => 1, '二' => 2, '三' => 3]
+     * 获取 $label 对应的 value，如不存在，返回 $default，若不传参数，返回整个 map，例如：['一' => 1, '二' => 2, '三' => 3]
      *
      * @param string $label 要转换的 label
      * @param mixed $default 默认的 value
@@ -233,7 +233,7 @@ abstract class Enum implements \JsonSerializable
     public static function labelToValue(string $label = null, $default = null)
     {
         $map = self::columnValues(0, 1);
-        return $label === null ? $map : ($map[$label] ?? $default);
+        return func_num_args() == 0 ? $map : ($label !== null ? ($map[$label] ?? $default) : $default);
     }
 
     /**

@@ -165,7 +165,7 @@ final class EnumTest extends TestCase
     public function testValueToLabel()
     {
         $this->assertEquals(Some::valueToLabel(), [1 => '一', 2 => '二', 3 => '三']);
-        $this->assertEquals(Some::valueToLabel(null), [1 => '一', 2 => '二', 3 => '三']);
+        $this->assertEquals(Some::valueToLabel(null), null);
         $this->assertEquals(Some::valueToLabel(1), '一');
         $this->assertEquals(Some::valueToLabel(2), '二');
         $this->assertEquals(Some::valueToLabel(3), '三');
@@ -173,7 +173,7 @@ final class EnumTest extends TestCase
         $this->assertEquals(Some::valueToLabel(6, '-'), '-');
 
         $this->assertEquals(Other::valueToLabel(), ['hh' => 'hh', 'bb' => 'bb']);
-        $this->assertEquals(Other::valueToLabel(null), ['hh' => 'hh', 'bb' => 'bb']);
+        $this->assertEquals(Other::valueToLabel(null), null);
         $this->assertEquals(Other::valueToLabel('hh'), 'hh');
         $this->assertEquals(Other::valueToLabel('bb'), 'bb');
     }
@@ -181,7 +181,7 @@ final class EnumTest extends TestCase
     public function testLabelToValue()
     {
         $this->assertEquals(Some::labelToValue(), ['一' => 1, '二' => 2, '三' => 3]);
-        $this->assertEquals(Some::labelToValue(null), ['一' => 1, '二' => 2, '三' => 3]);
+        $this->assertEquals(Some::labelToValue(null), null);
         $this->assertEquals(Some::labelToValue('一'), 1);
         $this->assertEquals(Some::labelToValue('二'), 2);
         $this->assertEquals(Some::labelToValue('三'), 3);
@@ -189,7 +189,7 @@ final class EnumTest extends TestCase
         $this->assertEquals(Some::labelToValue('六', '-'), '-');
 
         $this->assertEquals(Other::labelToValue(), ['hh' => 'hh', 'bb' => 'bb']);
-        $this->assertEquals(Other::labelToValue(null), ['hh' => 'hh', 'bb' => 'bb']);
+        $this->assertEquals(Other::labelToValue(null), null);
         $this->assertEquals(Other::labelToValue('hh'), 'hh');
         $this->assertEquals(Other::labelToValue('bb'), 'bb');
         $this->assertEquals(Other::labelToValue('xxx'), null);
