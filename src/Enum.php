@@ -212,26 +212,28 @@ abstract class Enum implements \JsonSerializable
      * 获取 $value 对应的 label 或 null，若不传参数或传 null，返回整个 map，例如：[1 => '一', 2 => '二', 3 => '三']。
      *
      * @param mixed $value 要转换的 value
+     * @param mixed $default 默认的 label
      *
      * @return string|null|array
      */
-    public static function valueToLabel($value = null)
+    public static function valueToLabel($value = null, $default = null)
     {
         $map = self::columnValues(1, 0);
-        return $value === null ? $map : ($map[$value] ?? null);
+        return $value === null ? $map : ($map[$value] ?? $default);
     }
 
     /**
      * 获取 $label 对应的 value 或 null，若不传参数或传 null，返回整个 map，例如：['一' => 1, '二' => 2, '三' => 3]
      *
      * @param string $label 要转换的 label
+     * @param mixed $default 默认的 value
      *
      * @return mixed|null|array
      */
-    public static function labelToValue(string $label = null)
+    public static function labelToValue(string $label = null, $default = null)
     {
         $map = self::columnValues(0, 1);
-        return $label === null ? $map : ($map[$label] ?? null);
+        return $label === null ? $map : ($map[$label] ?? $default);
     }
 
     /**

@@ -170,6 +170,7 @@ final class EnumTest extends TestCase
         $this->assertEquals(Some::valueToLabel(2), '二');
         $this->assertEquals(Some::valueToLabel(3), '三');
         $this->assertEquals(Some::valueToLabel(6), null);
+        $this->assertEquals(Some::valueToLabel(6, '-'), '-');
 
         $this->assertEquals(Other::valueToLabel(), ['hh' => 'hh', 'bb' => 'bb']);
         $this->assertEquals(Other::valueToLabel(null), ['hh' => 'hh', 'bb' => 'bb']);
@@ -185,6 +186,7 @@ final class EnumTest extends TestCase
         $this->assertEquals(Some::labelToValue('二'), 2);
         $this->assertEquals(Some::labelToValue('三'), 3);
         $this->assertEquals(Some::labelToValue('六'), null);
+        $this->assertEquals(Some::labelToValue('六', '-'), '-');
 
         $this->assertEquals(Other::labelToValue(), ['hh' => 'hh', 'bb' => 'bb']);
         $this->assertEquals(Other::labelToValue(null), ['hh' => 'hh', 'bb' => 'bb']);
