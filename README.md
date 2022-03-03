@@ -155,8 +155,8 @@ asList() | 作为列表返回，以便前端使用，返回值用类 js 格式�
 allKeys() | 获取全部 key 列表。
 allValues() | 获取全部 value 列表。
 allLabels() | 获取全部 label 列表。
-valueToLabel(mixed $value = null) | 获取 $value 对应的 label 或 null。若不传参数或传 null，返回整个 `map`，例如：`[1 => '一', 2 => '二', 3 => '三']`。
-labelToValue(string $label = null) | 获取 $label 对应的 value 或 null。若不传参数或传 null，返回整个 `map`。例如：`['一' => 1, '二' => 2, '三' => 3]`。
+valueToLabel(mixed $value = null, $default = null) | 获取 $value 对应的 label，如不存在，返回 $default，若不传参数，返回整个 `map`，例如：`[1 => '一', 2 => '二', 3 => '三']`。
+labelToValue(string $label = null, $default = null) | 获取 $label 对应的 value，如不存在，返回 $default，若不传参数，返回整个 `map`。例如：`['一' => 1, '二' => 2, '三' => 3]`。
 isValidKey(string $key) | 判断是否为合法的 key。
 isValidValue(mixed $value) | 判断是否为合法的 value。
 isValidLabel(string $label) | 判断是否为合法的 label。
