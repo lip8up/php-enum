@@ -160,6 +160,9 @@ labelToValue(string $label = null, $default = null) | 获取 $label 对应的 va
 isValidKey(string $key) | 判断是否为合法的 key。
 isValidValue(mixed $value) | 判断是否为合法的 value。
 isValidLabel(string $label) | 判断是否为合法的 label。
+fromKey(string $key) | 从 key 构建 Enum 实例，若不存在，则返回 null。
+fromValue(mixed $value) | 从 value 构建 Enum 实例，若不存在，则返回 null。
+isXxx(mixed $value) | 动态方法，Xxx 为枚举 key。
 
 ## 唯一实例
 
