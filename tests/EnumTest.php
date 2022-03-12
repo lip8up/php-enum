@@ -61,6 +61,28 @@ final class EnumTest extends TestCase
         Other::badCall();
     }
 
+    public function testFromKey()
+    {
+        $some = Some::fromKey('One');
+        $this->assertNotNull($some);
+        $this->assertEquals('One', $some->key());
+        $this->assertEquals(1, $some->value());
+
+        $some = Some::fromKey('OneXX00');
+        $this->assertNull($some);
+    }
+
+    public function testFromValue()
+    {
+        $one = Some::fromValue(1);
+        $this->assertNotNull($one);
+        $this->assertEquals('One', $one->key());
+        $this->assertEquals(1, $one->value());
+
+        $some = Some::fromValue(888);
+        $this->assertNull($some);
+    }
+
     public function testSame()
     {
         $this->assertSame(Some::One(), Some::One());
@@ -124,6 +146,11 @@ final class EnumTest extends TestCase
             'One' => [1, '一'],
             'Two' => [2, '二'],
             'Three' => [3, '三'],
+        ]);
+        $this->assertEquals(Some::allConstants(true), [
+            1 => ['One', '一'],
+            2 => ['Two', '二'],
+            3 => ['Three', '三'],
         ]);
         $this->assertEquals(Other::allConstants(), [
             'Haha' => ['hh', 'hh'],
@@ -217,6 +244,16 @@ final class EnumTest extends TestCase
         $this->assertSame(Some::isValidLabel('六'), false);
         $this->assertSame(Other::isValidLabel('hh'), true);
         $this->assertSame(Other::isValidLabel('bi'), false);
+    }
+
+    public function testIsXxxCall()
+    {
+        $this->assertTrue(Some::isOne(1));
+        $this->assertFalse(Some::isOne('1'));
+        $this->assertTrue(Some::isTwo(2));
+        $this->assertFalse(Some::isTwo(1));
+        $this->expectException(\BadMethodCallException::class);
+        $this->assertFalse(Some::isXxx(1));
     }
 
     public function testJsonEncode()

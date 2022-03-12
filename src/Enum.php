@@ -63,6 +63,38 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * 从 key 构建 Enum 实例，若不存在，则返回 null。
+     *
+     * @param string $key 键
+     * @return static|null
+     */
+    public static function fromKey(string $key)
+    {
+        $constants = self::allConstants();
+        if (isset($constants[$key])) {
+            [$value, $label] = $constants[$key];
+            return new static($key, $value, $label);
+        }
+        return null;
+    }
+
+    /**
+     * 从 value 构建 Enum 实例，若不存在，则返回 null。
+     *
+     * @param mixed $value 值
+     * @return static|null
+     */
+    public static function fromValue($value)
+    {
+        $constants = self::allConstants(true);
+        if (isset($constants[$value])) {
+            [$key, $label] = $constants[$value];
+            return new static($key, $value, $label);
+        }
+        return null;
+    }
+
+    /**
      * 获取枚举 key。
      *
      * @return string
@@ -105,6 +137,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * 获取全部常量列表，格式：`[ key1 => [value1, label1], ... ]`。
      *
+     * @param string $valueAsKey 使用 value 作为主键，默认使用 key 作为主键。
      * @return array
      *
      * @example #
@@ -123,23 +156,36 @@ abstract class Enum implements \JsonSerializable
      *     'Two' => [2, '二'],
      *     'Three' => [3, '三'],
      * ]
+     * // 调用 Some::allConstants(true)，结果为：
+     * [
+     *     1 => ['One', '一'],
+     *     2 => ['Two', '二'],
+     *     3 => ['Three', '三'],
+     * ]
      * ```
      * </code>
      */
-    public static function allConstants(): array
+    public static function allConstants($valueAsKey = false): array
     {
         $class = static::class;
-        if (!isset(self::$allConstants[$class])) {
+        $cacheKey = $class . ($valueAsKey ? '#value' : '#key');
+        if (!isset(self::$allConstants[$cacheKey])) {
             $rel = new \ReflectionClass($class);
             $list = $rel->getConstants();
             $allConstants = [];
-            foreach ($list as $key => $value) {
+            foreach ($list as $key => $it) {
                 // 当不是 [value, label] 格式的数组时，重复 value 作为 label
-                $allConstants[$key] = is_array($value) ? $value : [$value, $value];
+                $item = is_array($it) ? $it : [$it, $it];
+                if ($valueAsKey) {
+                    [$value, $label] = $item;
+                    $allConstants[$value] = [$key, $label];
+                } else {
+                    $allConstants[$key] = $item;
+                }
             }
-            self::$allConstants[$class] = $allConstants;
+            self::$allConstants[$cacheKey] = $allConstants;
         }
-        return self::$allConstants[$class];
+        return self::$allConstants[$cacheKey];
     }
 
     /**
@@ -285,12 +331,24 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 自定义 __callStatic，实现子类 const 值作为方法调用。
+     * 自定义 __callStatic，实现子类 Key 值作为方法调用。
+     *
+     * 2022-03-13 更新：增加 isXxx($value) 调用，Xxx 为枚举 key。
      *
      * @link https://www.php.net/manual/zh/language.oop5.overloading.php#object.callstatic
      */
     public static function __callStatic(string $name, array $arguments)
     {
+        // 支持 isXxx($value) 调用
+        if (substr($name, 0, 2) === 'is' && count($arguments) == 1) {
+            $key = substr($name, 2);
+            $enum = self::fromKey($key);
+            if ($enum !== null) {
+                $value = $arguments[0];
+                return $enum->value() === $value;
+            }
+        }
+
         $class = static::class;
         if (!isset(self::$instances[$class][$name])) {
             $allConstants = self::allConstants();
