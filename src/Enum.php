@@ -331,6 +331,25 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * 自定义 __call，实现子类 isXxx() 调用，Xxx 为枚举 key。
+     *
+     * @link https://www.php.net/manual/zh/language.oop5.overloading.php#object.call
+     */
+    public function __call(string $name, array $arguments)
+    {
+        // 支持 isXxx() 调用
+        if (substr($name, 0, 2) === 'is' && count($arguments) == 0) {
+            $key = substr($name, 2);
+            $enum = self::fromKey($key);
+            if ($enum !== null) {
+                return $enum->value() === $this->value;
+            } else {
+                static::throwBadMethod($key);
+            }
+        }
+    }
+
+    /**
      * 自定义 __callStatic，实现子类 Key 值作为方法调用。
      *
      * 2022-03-13 更新：增加 isXxx($value) 调用，Xxx 为枚举 key。
@@ -346,6 +365,8 @@ abstract class Enum implements \JsonSerializable
             if ($enum !== null) {
                 $value = $arguments[0];
                 return $enum->value() === $value;
+            } else {
+                static::throwBadMethod($key);
             }
         }
 
@@ -353,13 +374,18 @@ abstract class Enum implements \JsonSerializable
         if (!isset(self::$instances[$class][$name])) {
             $allConstants = self::allConstants();
             if (!isset($allConstants[$name]) && !\array_key_exists($name, $allConstants)) {
-                $message = "No static method or enum constant '$name' in class " . $class;
-                throw new \BadMethodCallException($message);
+                static::throwBadMethod($name);
             }
             [$value, $label] = $allConstants[$name];
             self::$instances[$class][$name] = new static($name, $value, $label);
         }
         return self::$instances[$class][$name];
+    }
+
+    private static function throwBadMethod(string $name)
+    {
+        $message = "No enum constant '$name' in class " . static::class;
+        throw new \BadMethodCallException($message);
     }
 
     /**

@@ -246,7 +246,7 @@ final class EnumTest extends TestCase
         $this->assertSame(Other::isValidLabel('bi'), false);
     }
 
-    public function testIsXxxCall()
+    public function testIsXxxStaticCall()
     {
         $this->assertTrue(Some::isOne(1));
         $this->assertFalse(Some::isOne('1'));
@@ -254,6 +254,15 @@ final class EnumTest extends TestCase
         $this->assertFalse(Some::isTwo(1));
         $this->expectException(\BadMethodCallException::class);
         $this->assertFalse(Some::isXxx(1));
+    }
+
+    public function testIsXxxCall()
+    {
+        $this->assertTrue(Some::One()->isOne());
+        $this->assertTrue(Some::Two()->isTwo());
+        $this->assertFalse(Some::Two()->isOne());
+        $this->expectException(\BadMethodCallException::class);
+        $this->assertFalse(Some::One()->isXxx());
     }
 
     public function testJsonEncode()
