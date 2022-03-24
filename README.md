@@ -142,6 +142,7 @@ Other::Haha()->value() == Other::Haha()->label()   // true
 key() | 获取枚举 key。
 value() | 获取枚举 value。
 label() | 获取枚举 label。
+isXxx() | 动态方法，Xxx 为枚举 key。
 __toString() | 无法被主动调用，在对实例本身进行字符串连接时，会被调用，此处实现为：`(string)$this->value`
 
 ### 静态方法
