@@ -203,6 +203,8 @@ switch ($some) {
 }
 ```
 
+> 同样，相等 == 也符合预期。
+
 ## JsonSerializable
 
 `lip\enum\Enum` 类实现了接口 `JsonSerializable`，例如：
