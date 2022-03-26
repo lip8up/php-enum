@@ -37,13 +37,13 @@ final class EnumTest extends TestCase
         $this->assertInstanceOf(Other::class, Other::Haha());
     }
 
-    public function testConstructorProtectedSome()
+    public function testConstructorPrivateSome()
     {
         $this->expectError();
         new Some('Three', 3);
     }
 
-    public function testConstructorProtectedOther()
+    public function testConstructorPrivateOther()
     {
         $this->expectError();
         new Other('Bibi', 'bb');
@@ -88,6 +88,41 @@ final class EnumTest extends TestCase
         $this->assertSame(Some::One(), Some::One());
         $this->assertSame(Other::Haha(), Other::Haha());
         $one = Some::One();
+        switch ($one) {
+            case Some::One():
+                $this->assertTrue(true);
+                break;
+            case Some::Two():
+                $this->assertTrue(false);
+                break;
+            case Some::Three():
+                $this->assertTrue(false);
+                break;
+            default:
+                $this->assertTrue(false);
+                break;
+        }
+    }
+
+    public function testSameFromEqual()
+    {
+        $this->assertSame(Some::One(), Some::fromValue(1));
+        $this->assertNotSame(Some::One(), Some::fromValue(2));
+        $this->assertSame(Other::Haha(), Other::fromKey('Haha'));
+        $this->assertNotSame(Other::Haha(), Other::fromKey('Bibi'));
+    }
+
+    public function testEqual()
+    {
+        $this->assertEquals(Some::One(), Some::fromValue(1));
+        $this->assertTrue(Some::One() == Some::fromValue(1));
+        $this->assertNotEquals(Some::One(), Some::fromValue(2));
+        $this->assertFalse(Some::One() == Some::fromValue(2));
+        $this->assertEquals(Other::Haha(), Other::fromKey('Haha'));
+        $this->assertTrue(Other::Haha() == Other::fromKey('Haha'));
+        $this->assertNotEquals(Other::Haha(), Other::fromKey('Bibi'));
+        $this->assertFalse(Other::Haha() == Other::fromKey('Bibi'));
+        $one = Some::fromValue(1);
         switch ($one) {
             case Some::One():
                 $this->assertTrue(true);

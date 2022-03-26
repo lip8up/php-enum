@@ -49,13 +49,13 @@ abstract class Enum implements \JsonSerializable
     protected static array $instances = [];
 
     /**
-     * 构造函数。将构造函数设成 protected，预防直接 new。
+     * 构造函数。将构造函数设成 private，预防直接 new。
      *
      * @param string $key 枚举 key
      * @param mixed $value 枚举 value
      * @param string $label 枚举 label
      */
-    protected function __construct(string $key, $value, $label = '')
+    private function __construct(string $key, $value, $label = '')
     {
         $this->key = $key;
         $this->value = $value;
@@ -72,8 +72,8 @@ abstract class Enum implements \JsonSerializable
     {
         $constants = self::allConstants();
         if (isset($constants[$key])) {
-            [$value, $label] = $constants[$key];
-            return new static($key, $value, $label);
+            // 不要使用 new static，以免产生的实例与通过 SomeEnum::SomeKey() 方式产生的实例不同。
+            return static::$key();
         }
         return null;
     }
@@ -88,8 +88,9 @@ abstract class Enum implements \JsonSerializable
     {
         $constants = self::allConstants(true);
         if (isset($constants[$value])) {
-            [$key, $label] = $constants[$value];
-            return new static($key, $value, $label);
+            [$key] = $constants[$value];
+            // 不要使用 new static，以免产生的实例与通过 SomeEnum::SomeKey() 方式产生的实例不同。
+            return static::$key();
         }
         return null;
     }
