@@ -240,6 +240,13 @@ final class EnumTest extends TestCase
         $this->assertEquals(Other::valueToLabel('bb'), 'bb');
     }
 
+    public function testValuesToLabels()
+    {
+        $this->assertEquals(Some::valuesToLabels([1, 2]), ['一', '二']);
+        $this->assertEquals(Some::valuesToLabels([1, 4, 3]), ['一', null, '三']);
+        $this->assertEquals(Some::valuesToLabels([1, 4, 3], '-'), ['一', '-', '三']);
+    }
+
     public function testLabelToValue()
     {
         $this->assertEquals(Some::labelToValue(), ['一' => 1, '二' => 2, '三' => 3]);
@@ -255,6 +262,13 @@ final class EnumTest extends TestCase
         $this->assertEquals(Other::labelToValue('hh'), 'hh');
         $this->assertEquals(Other::labelToValue('bb'), 'bb');
         $this->assertEquals(Other::labelToValue('xxx'), null);
+    }
+
+    public function testLabelsToValues()
+    {
+        $this->assertEquals(Some::labelsToValues(['一', '二']), [1, 2]);
+        $this->assertEquals(Some::labelsToValues(['一', '二', '四']), [1, 2, null]);
+        $this->assertEquals(Some::labelsToValues(['一', '二', '四'], '*'), [1, 2, '*']);
     }
 
     public function testIsValidKey()

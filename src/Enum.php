@@ -270,10 +270,26 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * 将一批 value 转换成对应的 label，若不存在，使用 $default 取代。
+     *
+     * @param array $values 一批值
+     * @param mixed $default 默认的 value
+     * @return array
+     */
+    public static function valuesToLabels(array $values, $default = null): array
+    {
+        $labels = [];
+        foreach ($values as $value) {
+            $labels[] = static::valueToLabel($value, $default);
+        }
+        return $labels;
+    }
+
+    /**
      * 获取 $label 对应的 value，如不存在，返回 $default，若不传参数，返回整个 map，例如：['一' => 1, '二' => 2, '三' => 3]
      *
      * @param string $label 要转换的 label
-     * @param mixed $default 默认的 value
+     * @param mixed $default 默认的 label
      *
      * @return mixed|null|array
      */
@@ -281,6 +297,22 @@ abstract class Enum implements \JsonSerializable
     {
         $map = self::columnValues(0, 1);
         return func_num_args() == 0 ? $map : ($label !== null ? ($map[$label] ?? $default) : $default);
+    }
+
+    /**
+     * 将一批 label 转换成对应的 value，若不存在，使用 $default 取代。
+     *
+     * @param array $labels
+     * @param mixed $default 默认的 label
+     * @return array
+     */
+    public static function labelsToValues(array $labels, $default = null): array
+    {
+        $values = [];
+        foreach ($labels as $label) {
+            $values[] = static::labelToValue($label, $default);
+        }
+        return $values;
     }
 
     /**
