@@ -153,6 +153,7 @@ __toString() | 无法被主动调用，在对实例本身进行字符串连接�
 --- | ---
 allConstants() | 获取全部常量列表，格式：`[ key1 => [value1, label1], ... ]`，例如：`[ 'One' => [1, '一'], 'Two' => [2, '二'], 'Three' => [3, '三'] ]`。
 asList() | 作为列表返回，以便前端使用，返回值用类 js 格式表示：`[ { key: key1, value: value1, label: label1  }, ... ]`。
+parts() | 将实例的一部分，作为列表返回，返回值用类 js 格式表示：`{ value, label }`。注意，这是实例方法。
 allKeys() | 获取全部 key 列表。
 allValues() | 获取全部 value 列表。
 allLabels() | 获取全部 label 列表。

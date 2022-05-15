@@ -224,7 +224,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 将值的一部分，作为列表返回，返回值用类 js 格式表示：`{ value, label }`。注意，该方法是实例方法。
+     * 将实例的一部分，作为列表返回，返回值用类 js 格式表示：`{ value, label }`。注意，这是实例方法。
      *
      * @param array $parts 默认 `['value', 'label']`，即只返回 value、label
      * @return array
