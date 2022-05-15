@@ -190,7 +190,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * 作为列表返回，以便前端使用，返回值用类 js 格式表示：`[ { key: key1, value: value1, label: label1  }, ... ]`。
+     * 作为列表返回，以便前端使用，返回值用类 js 格式表示：`[ { key: key1, value: value1, label: label1 }, ... ]`。
      *
      * @return array
      *
@@ -213,7 +213,7 @@ abstract class Enum implements \JsonSerializable
      * ```
      * </code>
      */
-    public static function asList()
+    public static function asList(): array
     {
         $all = self::allConstants();
         $list = [];
@@ -221,6 +221,36 @@ abstract class Enum implements \JsonSerializable
             array_push($list, ['key' => $key, 'value' => $value, 'label' => $label]);
         }
         return $list;
+    }
+
+    /**
+     * 将值的一部分，作为列表返回，返回值用类 js 格式表示：`{ value, label }`。注意，该方法是实例方法。
+     *
+     * @param array $parts 默认 `['value', 'label']`，即只返回 value、label
+     * @return array
+     *
+     * @example #
+     * <code>
+     * ```php
+     * // 对于下面的 Some
+     * class Some extends Enum
+     * {
+     *     private const One = [1, '一'];
+     *     private const Two = [2, '二'];
+     *     private const Three = [3, '三'];
+     * }
+     * // 调用 Some::One()->parts()，结果为：['value' => 1, 'label' => '一']
+     * // 调用 Some::Two()->parts(['key', 'value', 'label'])，结果为：['key' => 'Two', 'value' => 2, 'label' => '二']
+     * ```
+     * </code>
+     */
+    public function parts($parts = ['value', 'label']): array
+    {
+        $result = [];
+        foreach ($parts as $key) {
+            $result[$key] = $this->$key;
+        }
+        return $result;
     }
 
     /**

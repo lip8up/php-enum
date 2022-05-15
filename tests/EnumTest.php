@@ -206,6 +206,12 @@ final class EnumTest extends TestCase
         ]);
     }
 
+    public function testParts()
+    {
+        $this->assertEquals(Some::One()->parts(), ['value' => 1, 'label' => '一']);
+        $this->assertEquals(Some::Two()->parts(['key', 'value', 'label']), ['key' => 'Two', 'value' => 2, 'label' => '二']);
+    }
+
     public function testAllKeys()
     {
         $this->assertEquals(Some::allKeys(), ['One', 'Two', 'Three']);
